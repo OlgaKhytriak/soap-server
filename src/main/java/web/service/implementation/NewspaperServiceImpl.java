@@ -18,9 +18,9 @@ public class NewspaperServiceImpl implements NewspaperService {
 	public NewspaperResponse getAllNews() {
 		Object[] results =  dao.getAll().toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(GET_ALL_BOOKS_MSG,results);
+			return NewspaperResponse.success(GET_ALL,results);
 		}
-		return  NewspaperResponse.fault(NO_BOOKS_MSG);
+		return  NewspaperResponse.fault(NO_NEWS);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class NewspaperServiceImpl implements NewspaperService {
 		SingleNews result = dao.getByTitle(title);
 
 		if(result != null){
-			return  NewspaperResponse.success(GET_BOOK_BY_NAME_MSG, result);
+			return  NewspaperResponse.success(GET_BY_TITLE, result);
 		}
 
 		return  NewspaperResponse.fault(NO_SUCH_NEWS);
@@ -39,7 +39,7 @@ public class NewspaperServiceImpl implements NewspaperService {
 		SingleNews result = dao.getById(id);
 
 		if(result != null){
-			return  NewspaperResponse.success(GET_BOOK_BY_ID_MSG, result);
+			return  NewspaperResponse.success(GET_BY_ID, result);
 		}
 
 		return  NewspaperResponse.fault(NO_SUCH_NEWS);
@@ -49,9 +49,9 @@ public class NewspaperServiceImpl implements NewspaperService {
 	public NewspaperResponse getNewsByCategory(String category) {
 		Object[] results = dao.getByCategory(category).toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(GET_BOOKS_BY_AUTHOR_MSG,results);
+			return NewspaperResponse.success(GET_BY_CATEGORY,results);
 		}
-		return  NewspaperResponse.fault(NO_SUCH_AUTHOR_MSG);
+		return  NewspaperResponse.fault(NO_SUCH_CATEGORY);
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class NewspaperServiceImpl implements NewspaperService {
 		if(singleNews != null && isValidNews(singleNews)){
 			if (!dao.contains(singleNews)) {
 				dao.add(singleNews);
-				return NewspaperResponse.success(ADD_NEW_BOOK_MSG, singleNews);
+				return NewspaperResponse.success(ADD_NEW, singleNews);
 			}else{
 				return NewspaperResponse.fault(THIS_EXISTS_ALREADY_MSG);
 			}
 		}
-		return NewspaperResponse.fault(NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(INCORRECT_ARGUMENTS);
 	}
 
 	@Override
@@ -73,12 +73,12 @@ public class NewspaperServiceImpl implements NewspaperService {
 			SingleNews result = dao.getByTitle(oldNews.getTitle());
 			if(result != null){
 				dao.update(oldNews, newNews);
-				return NewspaperResponse.success(CHANGE_BOOK_MSG, result);
+				return NewspaperResponse.success(UPDATE, result);
 			}else{
 				return NewspaperResponse.fault(NO_SUCH_NEWS);
 			}
 		}
-		return NewspaperResponse.fault(NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(INCORRECT_ARGUMENTS);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class NewspaperServiceImpl implements NewspaperService {
 		boolean result = dao.delete(id);
 
 		if(result){
-			return  NewspaperResponse.success(DELETE_BOOK_MSG, null);
+			return  NewspaperResponse.success(DELETE, null);
 		}
 
 		return  NewspaperResponse.fault(NO_SUCH_NEWS);
