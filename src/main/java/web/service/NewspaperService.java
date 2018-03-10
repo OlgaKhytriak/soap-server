@@ -10,13 +10,13 @@ import javax.jws.soap.SOAPBinding;
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public interface WalletService {
+public interface NewspaperService {
 
    @WebMethod()
     NewspaperResponse getAllNews();
 
     @WebMethod()
-    NewspaperResponse getNewskByTitle(
+    NewspaperResponse getNewsByTitle(
             @WebParam(partName = "bookTitle") String title);
 
     @WebMethod()

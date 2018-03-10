@@ -10,15 +10,15 @@
         </listener-class>
     </listener>
     <servlet>
-        <servlet-name>WalletService</servlet-name>
+        <servlet-name>NewspaperService</servlet-name>
         <servlet-class>
             com.sun.xml.ws.transport.http.servlet.WSServlet
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>WalletService</servlet-name>
-        <url-pattern>/WalletService</url-pattern>
+        <servlet-name>NewspaperService</servlet-name>
+        <url-pattern>/NewspaperService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>120</session-timeout>

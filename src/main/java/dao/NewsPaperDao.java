@@ -1,6 +1,7 @@
 package dao;
 
 import com.epam.model.SingleNews;
+import model.SingleNews;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,14 +56,13 @@ public class NewsPaperDao {
         return list;
     }
 
-    public List<SingleNews> getByTitle(String title) {
-        List<SingleNews> list = new ArrayList<>();
-        for (SingleNews singleNews : newsList) {
-            if (singleNews.getTitle().equals(title)) {
-                list.add(singleNews);
+    public SingleNews getByTitle(String title) {
+            for (SingleNews singleNews : newsList) {
+                if(singleNews.getTitle().equals(title)){
+                    return singleNews;
+                }
             }
-        }
-        return list;
+            return null;
     }
 
     public List<SingleNews> getByTitleAndCategory(String title, String category) {

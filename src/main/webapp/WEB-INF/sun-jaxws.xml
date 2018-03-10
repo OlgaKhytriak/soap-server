@@ -3,7 +3,7 @@
         xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
         version="2.0">
     <endpoint
-            name="WalletServiceImpl"
-            implementation="web.service.implementation.WalletServiceImpl"
-            url-pattern="/WalletService"/>
+            name="NewspaperServiceImpl"
+            implementation="web.service.implementation.NewspaperServiceImpl"
+            url-pattern="/NewspaperService"/>
 </endpoints>

@@ -1,110 +1,106 @@
 package web.service.implementation;
 
-import com.epam.dao.BookDAO;
-import com.epam.model.Book;
-import com.epam.web.model.LibraryWSResponse;
-import com.epam.web.model.LibraryWSStatus;
+import dao.NewsPaperDao;
+import model.SingleNews;
 import web.hendler.NewspaperResponse;
-import web.service.LibraryService;
+import web.model.NewspaperStatus;
+import web.service.NewspaperService;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "com.epam.web.service.LibraryService")
+@WebService(endpointInterface = "web.service.NewspaperService")
 public class NewspaperServiceImpl implements NewspaperService {
 	
-	private BookDAO dao = new BookDAO();
+	private NewsPaperDao dao = new NewsPaperDao();
 
 	@Override
-	public NewspaperResponse getAllBooks() {
+	public NewspaperResponse getAllNews() {
 		Object[] results =  dao.getAll().toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(LibraryWSStatus.GET_ALL_BOOKS_MSG,results);
+			return NewspaperResponse.success(NewspaperStatus.GET_ALL_BOOKS_MSG,results);
 		}
-		return  NewspaperResponse.fault(LibraryWSStatus.NO_BOOKS_MSG);
+		return  NewspaperResponse.fault(NewspaperStatus.NO_BOOKS_MSG);
 	}
 
 	@Override
-	public NewspaperResponse getBookByName(String name) {
-		Book result = dao.get(name);
-		
+	public NewspaperResponse getNewsByTitle(String title) {
+		SingleNews result = dao.getByTitle(title);
+
 		if(result != null){
-			return  NewspaperResponse.success(LibraryWSStatus.GET_BOOK_BY_NAME_MSG, result);
+			return  NewspaperResponse.success(NewspaperStatus.GET_BOOK_BY_NAME_MSG, result);
 		}
-		
-		return  NewspaperResponse.fault(LibraryWSStatus.NO_SUCH_BOOK_MSG);
+
+		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
 	}
 
-	
 	@Override
-	public NewspaperResponse getBooksByAuthor(String author) {
-		Object[] results = dao.getAllByAuthor(author).toArray();
+	public NewspaperResponse getNewsById(Integer id) {
+		SingleNews result = dao.getById(id);
+
+		if(result != null){
+			return  NewspaperResponse.success(NewspaperStatus.GET_BOOK_BY_ID_MSG, result);
+		}
+
+		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
+	}
+
+	@Override
+	public NewspaperResponse getNewsByCategory(String category) {
+		Object[] results = dao.getByCategory(category).toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(LibraryWSStatus.GET_BOOKS_BY_AUTHOR_MSG,results);
+			return NewspaperResponse.success(NewspaperStatus.GET_BOOKS_BY_AUTHOR_MSG,results);
 		}
-		return  NewspaperResponse.fault(LibraryWSStatus.NO_SUCH_AUTHOR_MSG);
+		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_AUTHOR_MSG);
 	}
 
 	@Override
-	public NewspaperResponse giveBackBook(Book book) {
-		if(book != null && isValidBook(book)){
-			if (!dao.contains(book)) {
-				dao.add(book);
-				return NewspaperResponse.success(LibraryWSStatus.ADD_NEW_BOOK_MSG, book);
+	public NewspaperResponse giveBackNews(SingleNews singleNews) {
+		if(singleNews != null && isValidNews(singleNews)){
+			if (!dao.contains(singleNews)) {
+				dao.add(singleNews);
+				return NewspaperResponse.success(NewspaperStatus.ADD_NEW_BOOK_MSG, singleNews);
 			}else{
-				return NewspaperResponse.fault(LibraryWSStatus.THIS_EXISTS_ALREADY_MSG);
+				return NewspaperResponse.fault(NewspaperStatus.THIS_EXISTS_ALREADY_MSG);
 			}
 		}
-		return NewspaperResponse.fault(LibraryWSStatus.NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(NewspaperStatus.NOT_CORRECT_ARGUMENTS_MSG);
 	}
 
 	@Override
-	public NewspaperResponse changeBook(Book oldBook, Book newBook) {
-		if(oldBook != null && newBook != null && isValidBook(oldBook) && isValidBook(newBook)){
-			Book result = dao.get(oldBook.getName());
+	public NewspaperResponse changeNews(SingleNews oldNews, SingleNews newNews) {
+		if(oldNews != null && newNews != null && isValidNews(oldNews) && isValidNews(newNews)){
+			SingleNews result = dao.getByTitle(oldNews.getTitle());
 			if(result != null){
-				dao.update(oldBook, newBook);
-				return NewspaperResponse.success(LibraryWSStatus.CHANGE_BOOK_MSG, result);
+				dao.update(oldNews, newNews);
+				return NewspaperResponse.success(NewspaperStatus.CHANGE_BOOK_MSG, result);
 			}else{
-				return NewspaperResponse.fault(LibraryWSStatus.NO_SUCH_BOOK_MSG);
+				return NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
 			}
 		}
-		return NewspaperResponse.fault(LibraryWSStatus.NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(NewspaperStatus.NOT_CORRECT_ARGUMENTS_MSG);
 	}
 
 	@Override
-	public NewspaperResponse getBookById(Integer id) {
-		Book result = dao.get(id);
-		
-		if(result != null){
-			return  NewspaperResponse.success(LibraryWSStatus.GET_BOOK_BY_ID_MSG, result);
-		}
-		
-		return  NewspaperResponse.fault(LibraryWSStatus.NO_SUCH_BOOK_MSG);
-	}
-	
-	@Override
-	public NewspaperResponse deleteBook(Integer id) {
+	public NewspaperResponse deleteNews(Integer id) {
 		boolean result = dao.delete(id);
-		
+
 		if(result){
-			return  NewspaperResponse.success(LibraryWSStatus.DELETE_BOOK_MSG, null);
+			return  NewspaperResponse.success(NewspaperStatus.DELETE_BOOK_MSG, null);
 		}
-		
-		return  NewspaperResponse.fault(LibraryWSStatus.NO_SUCH_BOOK_MSG);
+
+		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
 	}
-	
-	private boolean isValidBook(Book book){
-		if(book != null &&
-				book.getId()!= null &&
-				book.getId() > 0 &&
-				!book.getAuthor().isEmpty()&&
-				!book.getName().isEmpty()&&
-				!book.getGenre().isEmpty()){
+
+	private boolean isValidNews(SingleNews singleNews){
+		if(singleNews != null &&
+				singleNews.getId()!= null &&
+				singleNews.getId() > 0 &&
+				!singleNews.getCategory().isEmpty()&&
+				!singleNews.getTitle().isEmpty()&&
+				!singleNews.getLink().isEmpty()&&
+				!singleNews.getDescription().isEmpty()){
 			return true;
 		}
 		return false;
 	}
-	
-	
-
 }
