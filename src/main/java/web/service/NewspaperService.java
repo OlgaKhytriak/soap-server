@@ -31,7 +31,7 @@ public interface NewspaperService {
     NewspaperResponse addNews(@WebParam(partName = "news-to-add") SingleNews singleNews);
 
     @WebMethod()
-    NewspaperResponse changeNews(
+    NewspaperResponse updateNews(
             @WebParam(partName = "old-news") SingleNews oldNews,
             @WebParam(partName = "new-news") SingleNews newNews);
 

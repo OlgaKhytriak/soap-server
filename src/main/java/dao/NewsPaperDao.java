@@ -63,17 +63,18 @@ public class NewsPaperDao {
     }
 
     public boolean delete(Integer id) {
-        int beforeDeleteSize=newsList.size();
+        int beforeDeleteSize = newsList.size();
         SingleNews newsToDelete = newsList.get(id);
         newsList.remove(newsToDelete);
-        return (newsList.size()==beforeDeleteSize-1);
+        return (newsList.size() == beforeDeleteSize - 1);
     }
 
     public void update(SingleNews oldSingleNews, SingleNews newSingleNews) {
         newsList.remove(oldSingleNews);
         newsList.add(newSingleNews);
     }
-    public boolean contains(SingleNews singleNews){
+
+    public boolean contains(SingleNews singleNews) {
         return newsList.contains(singleNews);
     }
 }
