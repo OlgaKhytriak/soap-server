@@ -9,7 +9,7 @@ public class SingleNews {
     private String category;
     private String description;
     private String link;
-    
+
     public SingleNews() {
     }
 
@@ -20,8 +20,6 @@ public class SingleNews {
         this.description = description;
         this.link = link;
     }
-
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -30,8 +28,6 @@ public class SingleNews {
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
-
-
     @Override
     public boolean equals(Object obj) {
         SingleNews news = (SingleNews) obj;
