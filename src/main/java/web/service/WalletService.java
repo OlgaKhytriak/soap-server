@@ -1,6 +1,7 @@
 package web.service;
 
-import web.hendler.WalletResponse;
+import model.SingleNews;
+import web.hendler.NewspaperResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -11,14 +12,31 @@ import javax.jws.soap.SOAPBinding;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface WalletService {
 
-    @WebMethod()
-    WalletResponse getBalance();
+   @WebMethod()
+    NewspaperResponse getAllNews();
 
     @WebMethod()
-    WalletResponse buyGood(
-            @WebParam(partName = "goodPrice") double goodPrice);
+    NewspaperResponse getNewskByTitle(
+            @WebParam(partName = "bookTitle") String title);
 
     @WebMethod()
-    WalletResponse putMoneyOnBalance(
-            @WebParam(partName = "moneyQnt") double moneyQnt);
+    NewspaperResponse getNewsById(
+            @WebParam(partName = "newsId") Integer id);
+
+    @WebMethod()
+    NewspaperResponse getNewsByCategory(
+            @WebParam(partName = "bookCategory") String category);
+
+    @WebMethod()
+    NewspaperResponse giveBackNews(@WebParam(partName = "newsToGiveBack") SingleNews singleNews);
+
+    @WebMethod()
+    NewspaperResponse changeNews(
+            @WebParam(partName = "oldNews") SingleNews oldNews,
+            @WebParam(partName = "newNews") SingleNews newNews);
+
+    @WebMethod()
+    NewspaperResponse deleteNews(
+            @WebParam(partName = "newsId") Integer id);
+
 }
