@@ -17,26 +17,26 @@ public interface NewspaperService {
 
     @WebMethod()
     NewspaperResponse getNewsByTitle(
-            @WebParam(partName = "bookTitle") String title);
+            @WebParam(partName = "news-title") String title);
 
     @WebMethod()
     NewspaperResponse getNewsById(
-            @WebParam(partName = "newsId") Integer id);
+            @WebParam(partName = "news-id") Integer id);
 
     @WebMethod()
     NewspaperResponse getNewsByCategory(
-            @WebParam(partName = "bookCategory") String category);
+            @WebParam(partName = "news-category") String category);
 
     @WebMethod()
-    NewspaperResponse giveBackNews(@WebParam(partName = "newsToGiveBack") SingleNews singleNews);
+    NewspaperResponse addNews(@WebParam(partName = "news-to-add") SingleNews singleNews);
 
     @WebMethod()
     NewspaperResponse changeNews(
-            @WebParam(partName = "oldNews") SingleNews oldNews,
-            @WebParam(partName = "newNews") SingleNews newNews);
+            @WebParam(partName = "old-news") SingleNews oldNews,
+            @WebParam(partName = "new-news") SingleNews newNews);
 
     @WebMethod()
     NewspaperResponse deleteNews(
-            @WebParam(partName = "newsId") Integer id);
+            @WebParam(partName = "news-id") Integer id);
 
 }

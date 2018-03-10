@@ -24,7 +24,6 @@ public class NewsPaperDao {
         newsList.add(new SingleNews(8, "Religious-Mummies", "Science", "At least 40 limestone sarcophagi that held mummified burials were discovered in the cemetery.", "https://www.express.co.uk"));
         newsList.add(new SingleNews(9, "Penguin-colony", "Nature", "Penguin super-colony spotted from space", "http://www.bbc.com/news"));
         newsList.add(new SingleNews(10, "Shakhtar", "Sport", "Shakhtar Donetsk beats Roma", "https://www.theverge.com"));
-
     }
 
     public void add(SingleNews news) {

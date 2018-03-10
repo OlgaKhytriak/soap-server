@@ -3,10 +3,11 @@ package web.service.implementation;
 import dao.NewsPaperDao;
 import model.SingleNews;
 import web.hendler.NewspaperResponse;
-import web.model.NewspaperStatus;
 import web.service.NewspaperService;
 
 import javax.jws.WebService;
+
+import static constant.Messages.*;
 
 @WebService(endpointInterface = "web.service.NewspaperService")
 public class NewspaperServiceImpl implements NewspaperService {
@@ -17,9 +18,9 @@ public class NewspaperServiceImpl implements NewspaperService {
 	public NewspaperResponse getAllNews() {
 		Object[] results =  dao.getAll().toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(NewspaperStatus.GET_ALL_BOOKS_MSG,results);
+			return NewspaperResponse.success(GET_ALL_BOOKS_MSG,results);
 		}
-		return  NewspaperResponse.fault(NewspaperStatus.NO_BOOKS_MSG);
+		return  NewspaperResponse.fault(NO_BOOKS_MSG);
 	}
 
 	@Override
@@ -27,10 +28,10 @@ public class NewspaperServiceImpl implements NewspaperService {
 		SingleNews result = dao.getByTitle(title);
 
 		if(result != null){
-			return  NewspaperResponse.success(NewspaperStatus.GET_BOOK_BY_NAME_MSG, result);
+			return  NewspaperResponse.success(GET_BOOK_BY_NAME_MSG, result);
 		}
 
-		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
+		return  NewspaperResponse.fault(NO_SUCH_NEWS);
 	}
 
 	@Override
@@ -38,32 +39,32 @@ public class NewspaperServiceImpl implements NewspaperService {
 		SingleNews result = dao.getById(id);
 
 		if(result != null){
-			return  NewspaperResponse.success(NewspaperStatus.GET_BOOK_BY_ID_MSG, result);
+			return  NewspaperResponse.success(GET_BOOK_BY_ID_MSG, result);
 		}
 
-		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
+		return  NewspaperResponse.fault(NO_SUCH_NEWS);
 	}
 
 	@Override
 	public NewspaperResponse getNewsByCategory(String category) {
 		Object[] results = dao.getByCategory(category).toArray();
 		if(results.length != 0){
-			return NewspaperResponse.success(NewspaperStatus.GET_BOOKS_BY_AUTHOR_MSG,results);
+			return NewspaperResponse.success(GET_BOOKS_BY_AUTHOR_MSG,results);
 		}
-		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_AUTHOR_MSG);
+		return  NewspaperResponse.fault(NO_SUCH_AUTHOR_MSG);
 	}
 
 	@Override
-	public NewspaperResponse giveBackNews(SingleNews singleNews) {
+	public NewspaperResponse addNews(SingleNews singleNews) {
 		if(singleNews != null && isValidNews(singleNews)){
 			if (!dao.contains(singleNews)) {
 				dao.add(singleNews);
-				return NewspaperResponse.success(NewspaperStatus.ADD_NEW_BOOK_MSG, singleNews);
+				return NewspaperResponse.success(ADD_NEW_BOOK_MSG, singleNews);
 			}else{
-				return NewspaperResponse.fault(NewspaperStatus.THIS_EXISTS_ALREADY_MSG);
+				return NewspaperResponse.fault(THIS_EXISTS_ALREADY_MSG);
 			}
 		}
-		return NewspaperResponse.fault(NewspaperStatus.NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(NOT_CORRECT_ARGUMENTS_MSG);
 	}
 
 	@Override
@@ -72,12 +73,12 @@ public class NewspaperServiceImpl implements NewspaperService {
 			SingleNews result = dao.getByTitle(oldNews.getTitle());
 			if(result != null){
 				dao.update(oldNews, newNews);
-				return NewspaperResponse.success(NewspaperStatus.CHANGE_BOOK_MSG, result);
+				return NewspaperResponse.success(CHANGE_BOOK_MSG, result);
 			}else{
-				return NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
+				return NewspaperResponse.fault(NO_SUCH_NEWS);
 			}
 		}
-		return NewspaperResponse.fault(NewspaperStatus.NOT_CORRECT_ARGUMENTS_MSG);
+		return NewspaperResponse.fault(NOT_CORRECT_ARGUMENTS_MSG);
 	}
 
 	@Override
@@ -85,10 +86,10 @@ public class NewspaperServiceImpl implements NewspaperService {
 		boolean result = dao.delete(id);
 
 		if(result){
-			return  NewspaperResponse.success(NewspaperStatus.DELETE_BOOK_MSG, null);
+			return  NewspaperResponse.success(DELETE_BOOK_MSG, null);
 		}
 
-		return  NewspaperResponse.fault(NewspaperStatus.NO_SUCH_BOOK_MSG);
+		return  NewspaperResponse.fault(NO_SUCH_NEWS);
 	}
 
 	private boolean isValidNews(SingleNews singleNews){

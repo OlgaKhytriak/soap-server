@@ -1,9 +1,9 @@
 package web.hendler;
 
 import model.SingleNews;
-import web.model.NewspaperStatus;
-import web.model.NewspaperStatusFault;
-import web.model.NewspaperStatusSuccess;
+import web.model.*;
+import web.model.StatusFault;
+import web.model.StatusSuccess;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,36 +19,36 @@ public class NewspaperResponse {
     @XmlElementRef(type = SingleNews.class)
     private Object[] results;
 
-    @XmlElementRefs({@XmlElementRef(type = NewspaperStatusSuccess.class), @XmlElementRef(type = NewspaperStatusFault.class)})
-    private NewspaperStatus status;
+    @XmlElementRefs({@XmlElementRef(type = StatusSuccess.class), @XmlElementRef(type = StatusFault.class)})
+    private Status status;
 
     public NewspaperResponse() {
     }
 
-    private NewspaperResponse(NewspaperStatus status, Object result) {
+    private NewspaperResponse(Status status, Object result) {
         this.result = result;
         this.status = status;
     }
 
-    private NewspaperResponse(NewspaperStatus status, Object[] results) {
+    private NewspaperResponse(Status status, Object[] results) {
         this.results = results;
         this.status = status;
     }
 
-    private NewspaperResponse(NewspaperStatus status) {
+    private NewspaperResponse(Status status) {
         this.status = status;
     }
 
     public static NewspaperResponse success(String status, Object result) {
-        return new NewspaperResponse(new NewspaperStatusSuccess(status), result);
+        return new NewspaperResponse(new StatusSuccess(status), result);
     }
 
     public static NewspaperResponse success(String status, Object[] results) {
-        return new NewspaperResponse(new NewspaperStatusSuccess(status), results);
+        return new NewspaperResponse(new StatusSuccess(status), results);
     }
 
     public static NewspaperResponse fault(String status) {
-        return new NewspaperResponse(new NewspaperStatusFault(status));
+        return new NewspaperResponse(new StatusFault(status));
     }
 
     public Object getResult() {

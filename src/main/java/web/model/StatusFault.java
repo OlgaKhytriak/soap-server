@@ -2,15 +2,14 @@ package web.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="success")
-public class NewspaperStatusSuccess extends NewspaperStatus {
+@XmlRootElement(name="fault")
+public class StatusFault implements Status{
 	
 	private String message;
 	
-	public NewspaperStatusSuccess() {
-	}
+	public StatusFault() {}
 	
-	public NewspaperStatusSuccess(String message){
+	public StatusFault(String message){
 		this.message = message;
 	}
 
