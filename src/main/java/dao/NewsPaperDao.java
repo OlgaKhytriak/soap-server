@@ -1,6 +1,5 @@
 package dao;
 
-import com.epam.model.SingleNews;
 import model.SingleNews;
 
 import java.util.ArrayList;
@@ -89,11 +88,9 @@ public class NewsPaperDao {
         return false;
     }
 
-    public void delete(SingleNews singleNews) {
-        newsList.remove(singleNews);
-    }
-
-    public boolean delete(Integer id) { //переписати не можна видаляти в ытераторы
+    public boolean delete(Integer id) {
+        SingleNews newsToDelete=newsList.get(id);
+        newsList.remove(newsToDelete);
         Iterator<SingleNews> iter = newsList.iterator();
         while (iter.hasNext()) {
             SingleNews singleNews = iter.next();
