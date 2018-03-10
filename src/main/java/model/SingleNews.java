@@ -9,6 +9,9 @@ public class SingleNews {
     private String category;
     private String description;
     private String link;
+    
+    public SingleNews() {
+    }
 
     public SingleNews(Integer id, String title, String category, String description, String link) {
         this.id = id;
@@ -18,8 +21,6 @@ public class SingleNews {
         this.link = link;
     }
 
-    public SingleNews() {
-    }
 
     @Override
     public int hashCode() {

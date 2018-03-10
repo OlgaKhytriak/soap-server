@@ -3,7 +3,6 @@ package dao;
 import model.SingleNews;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class NewsPaperDao {
@@ -56,80 +55,24 @@ public class NewsPaperDao {
     }
 
     public SingleNews getByTitle(String title) {
-            for (SingleNews singleNews : newsList) {
-                if(singleNews.getTitle().equals(title)){
-                    return singleNews;
-                }
-            }
-            return null;
-    }
-
-    public List<SingleNews> getByTitleAndCategory(String title, String category) {
-        List<SingleNews> list = new ArrayList<>();
         for (SingleNews singleNews : newsList) {
-            if (singleNews.getTitle().equals(title) && singleNews.getCategory().equals(category)) {
-                list.add(singleNews);
+            if (singleNews.getTitle().equals(title)) {
+                return singleNews;
             }
         }
-        return list;
-    }
-    //-------------------------
-
-    public boolean contains(SingleNews singleNews) {
-        return newsList.contains(singleNews);
-    }
-
-    public boolean containsById(SingleNews singleNews) {
-        for (SingleNews currentNews : newsList) {
-            if (currentNews.getId().equals(singleNews.getId())) {
-                return true;
-            }
-        }
-        return false;
+        return null;
     }
 
     public boolean delete(Integer id) {
-        SingleNews newsToDelete=newsList.get(id);
+        int beforeDeleteSize = newsList.size();
+        SingleNews newsToDelete = newsList.get(id);
         newsList.remove(newsToDelete);
-        Iterator<SingleNews> iter = newsList.iterator();
-        while (iter.hasNext()) {
-            SingleNews singleNews = iter.next();
-            if (singleNews.getId().equals(id)) {
-                iter.remove();
-                return true;
-            }
-        }
-        return false;
+        return (newsList.size() == beforeDeleteSize - 1);
     }
 
     public void update(SingleNews oldSingleNews, SingleNews newSingleNews) {
         newsList.remove(oldSingleNews);
         newsList.add(newSingleNews);
-
-/*
-        Iterator<SingleNews> iter = newsList.iterator();
-        boolean oldNewsDeleted = false;
-        while (iter.hasNext()) {
-            if(iter.next().getId().equals(oldSingleNews.getId())){
-                iter.remove();
-                oldNewsDeleted = true;
-            }
-        }
-        if(oldNewsDeleted){
-            newsList.add(newSingleNews);
-        }
-*/
     }
-
-    public List<SingleNews> getAllByAuthor(String category) {//перейменувати на катерогію
-        List<SingleNews> list = new ArrayList<>();
-        for (SingleNews singleNews : newsList) {
-            if (singleNews.getCategory().equals(category)) {
-                list.add(singleNews);
-            }
-        }
-        return list;
-    }
-
 
 }
