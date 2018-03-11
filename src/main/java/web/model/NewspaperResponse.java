@@ -1,9 +1,6 @@
-package web.hendler;
+package web.model;
 
 import model.SingleNews;
-import web.model.*;
-import web.model.StatusFault;
-import web.model.StatusSuccess;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -39,6 +36,14 @@ public class NewspaperResponse {
         this.status = status;
     }
 
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
+
     public static NewspaperResponse success(String status, Object result) {
         return new NewspaperResponse(new StatusSuccess(status), result);
     }
@@ -51,13 +56,9 @@ public class NewspaperResponse {
         return new NewspaperResponse(new StatusFault(status));
     }
 
-    public Object getResult() {
-        return result;
-    }
 
-    public void setResult(Object result) {
-        this.result = result;
-    }
+
+
 
 
 }

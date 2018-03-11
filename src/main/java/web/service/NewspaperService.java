@@ -1,7 +1,7 @@
 package web.service;
 
 import model.SingleNews;
-import web.hendler.NewspaperResponse;
+import web.model.NewspaperResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

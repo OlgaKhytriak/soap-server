@@ -4,6 +4,6 @@
         version="2.0">
     <endpoint
             name="NewspaperServiceImpl"
-            implementation="web.service.implementation.NewspaperServiceImpl"
+            implementation="web.service.impl.NewspaperServiceImpl"
             url-pattern="/NewspaperService"/>
 </endpoints>

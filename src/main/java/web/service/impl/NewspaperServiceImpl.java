@@ -1,13 +1,13 @@
-package web.service.implementation;
+package web.service.impl;
 
 import dao.NewsPaperDao;
 import model.SingleNews;
-import web.hendler.NewspaperResponse;
+import web.model.NewspaperResponse;
 import web.service.NewspaperService;
 
 import javax.jws.WebService;
 
-import static constant.Messages.*;
+import static web.model.Status.*;
 
 @WebService(endpointInterface = "web.service.NewspaperService")
 public class NewspaperServiceImpl implements NewspaperService {

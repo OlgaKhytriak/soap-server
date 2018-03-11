@@ -2,7 +2,7 @@ package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "news")
+@XmlRootElement(name = "single-news")
 public class SingleNews {
     private Integer id;
     private String title;
